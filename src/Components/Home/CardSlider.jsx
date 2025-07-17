@@ -56,7 +56,9 @@ const CardSlider = () => {
   };
 
   return (
-    <div className="container mb-5">
+    <div className="container mb-5" id="medicos-profesionales">
+      <h1 className="text-center my-4">Nuestros Profesionales De Salud</h1>
+      <hr className="h-25"/>
       <Slider {...settings}>
         {doctors.map((doctor, index) => (
           <div key={index} className="p-2">

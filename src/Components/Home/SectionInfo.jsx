@@ -12,7 +12,6 @@ const SectionInfo = () => {
     centerMode: true,
     infinite: true,
     speed: 350,
-    // centerPadding: "20px", // Reducido para evitar overflow
     slidesToShow: 3,
     slidesToScroll: 1,
     responsive: [
@@ -21,7 +20,6 @@ const SectionInfo = () => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          // centerPadding: "10px", // Menos padding para pantallas pequeñas
         },
       },
       {
@@ -29,14 +27,14 @@ const SectionInfo = () => {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
-          // centerPadding: "20px",
+          
         },
       },
     ],
   };
 
   const services = [
-    { title: 'Cardiología', description: 'Servicios de cardiología avanzada.', icon: faHeartbeat, size: "2x" },
+    { title: 'Cardiología', description: 'Servicios de cardiología avanzada.', icon: faHeartbeat, size: "2xl" },
     { title: 'Odontología', description: 'Cuidado dental para toda la familia.', icon: faTooth, size: "2x" },
     { title: 'Neurología', description: 'Tratamiento para enfermedades neurológicas.', icon: faBrain, size: "2x" },
     { title: 'Pediatría', description: 'Atención médica para niños y adolescentes.', icon: faChild, size: "2x" },
@@ -60,7 +58,7 @@ const SectionInfo = () => {
       <div className="container service-carousel">
         <Slider {...settings}>
           {services.map((service, index) => (
-            <div key={index} className="service-item mt-5">
+            <div key={index} className="service-item mt-5 ">
               <div className="service-icon">
                 <FontAwesomeIcon icon={service.icon} size={service.size} />
               </div>

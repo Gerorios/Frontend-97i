@@ -14,8 +14,6 @@ const HomeScreen = () => {
       <SectionInfo />
       <Pasos/>
       <Section2 />
-      <h1 className="text-center my-4">Nuestros Médicos</h1>
-      <hr className="h-25"/>
       <CardSlider/>
     </div>
         

@@ -16,7 +16,7 @@ const HeroSection = () => {
           <Carousel.Caption className="centered-caption">
             <h2 className='texto-imagen'>Bienvenido a la Clínica</h2>
             <p className='texto-imagen'>Atención médica de calidad a tu alcance.</p>
-            <a href="">
+            <a href="#medicos-profesionales">
               <Button text = {"Conocer mas"} className="Btn-carousel"/>
             </a>
           </Carousel.Caption>

@@ -9,7 +9,7 @@ import nachoFoto from '../assets/integrantes/nacho.jpg';
 import magaliFoto from '../assets/integrantes/magali.jpeg';
 import gonzaloFoto from '../assets/integrantes/gonzalo.jpeg';
 
-// Datos de los integrantes
+
 const integrantes = [
   {
     nombre: 'Salustiano Robles Teran',
