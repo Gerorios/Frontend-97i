@@ -11,7 +11,7 @@ const PerfilScreen = ({ user }) => {
   // Función para actualizar usuario en el servidor
   const actualizarUsuario = async (userId, updatedData) => {
     try {
-      const response = await fetch(`https://comision97i-backfinal.vercel.app/api/update/${userId}`, {
+      const response = await fetch(`http://localhost:3000/api/update/${userId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

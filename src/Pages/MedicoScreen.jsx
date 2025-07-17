@@ -10,7 +10,7 @@ const MedicoScreen = () => {
   useEffect(() => {
     const fetchPacientes = async () => {
       try {
-        const response = await fetch('https://comision97i-backfinal.vercel.app/api/getAllAppointments');
+        const response = await fetch('http://localhost:3000/api/getAllAppointments');
         const data = await response.json();
 
         // Clasificar pacientes por su estado
@@ -33,7 +33,7 @@ const MedicoScreen = () => {
   // Función para aceptar el turno de un paciente
   const aceptarPaciente = async (id) => {
     try {
-      const response = await fetch(`https://comision97i-backfinal.vercel.app/api/appointments/${id}`, {
+      const response = await fetch(`http://localhost:3000/api/appointments/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ estado: 'aceptado' })
@@ -53,7 +53,7 @@ const MedicoScreen = () => {
   // Función para rechazar el turno de un paciente
   const rechazarPaciente = async (id) => {
     try {
-      const response = await fetch(`https://comision97i-backfinal.vercel.app/api/appointments/${id}`, {
+      const response = await fetch(`http://localhost:3000/api/appointments/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ estado: 'rechazado' })

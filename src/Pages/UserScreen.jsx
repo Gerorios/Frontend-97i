@@ -12,7 +12,7 @@ const UserScreen = () => {
       try {
         const token = localStorage.getItem('token'); // Obtener token del almacenamiento local
 
-        const response = await fetch('https://comision97i-backfinal.vercel.app/api/medicos', {
+        const response = await fetch('http://localhost:3000/api/medicos', {
           headers: {
             Authorization: `Bearer ${token}` // Incluir el token en los headers
           }

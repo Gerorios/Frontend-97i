@@ -23,7 +23,7 @@ const Section2 = () => {
       try {
         const token = localStorage.getItem('token'); // Obtener token del almacenamiento local
 
-        const response = await fetch('https://comision97i-backfinal.vercel.app/api/medicos', {
+        const response = await fetch('http://localhost:3000/api/medicos', {
           headers: {
             Authorization: `Bearer ${token}` // Incluir el token en los headers
           }
@@ -51,7 +51,7 @@ const Section2 = () => {
     const fetchEstudios = async () => {
       try {
         const token = localStorage.getItem('token'); // Obtener token del almacenamiento local
-        const response = await fetch('https://comision97i-backfinal.vercel.app/api/tipo-estudios', {
+        const response = await fetch('http://localhost:3000/api/tipo-estudios', {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}` // Incluir el token en los headers
@@ -118,7 +118,7 @@ const Section2 = () => {
     };
   
     try {
-      const response = await fetch("https://comision97i-backfinal.vercel.app/api/createAppointments", {
+      const response = await fetch("http://localhost:3000/api/createAppointments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
