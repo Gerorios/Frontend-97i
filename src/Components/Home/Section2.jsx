@@ -36,7 +36,7 @@ const Section2 = () => {
         const data = await response.json();
 
         if (data && data.medicos) {
-          // Establecer los médicos en el estado
+          
           setMedicos(data.medicos);
 
         } else {
@@ -50,11 +50,11 @@ const Section2 = () => {
 
     const fetchEstudios = async () => {
       try {
-        const token = localStorage.getItem('token'); // Obtener token del almacenamiento local
+        const token = localStorage.getItem('token'); 
         const response = await fetch('http://localhost:3000/api/tipo-estudios', {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${token}` // Incluir el token en los headers
+            Authorization: `Bearer ${token}` 
           }
         });
     
@@ -112,6 +112,7 @@ const Section2 = () => {
     const formDataWithUser = {
       user: user.idUser,  // Usa el ID del usuario almacenado
       tipoEstudio: formData.tipoEstudio,
+      phone_number: formData.telefono,
       medico: formData.medicoId,
       message: formData.message,
       fecha: formData.fecha.toISOString()

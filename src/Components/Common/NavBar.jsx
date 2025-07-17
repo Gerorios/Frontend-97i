@@ -31,13 +31,13 @@ const NavBar = () => {
   // Función para redirigir al inicio según el rol del usuario
   const navigateToHome = () => {
     if (!isAuthenticated || !user) {
-      navigate("/");  // Si no está autenticado, redirige al inicio público
+      navigate("/");  
     } else if (user.role === "admin") {
-      navigate("/admin");
+      navigate("/");
     } else if (user.role === "usuario") {
-      navigate("/user");
+      navigate("/");
     } else if (user.role === "medico") {
-      navigate("/medico");
+      navigate("/");
     }
   };
 
@@ -45,7 +45,7 @@ const NavBar = () => {
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-          {/* Título que redirige según el rol del usuario */}
+          
           <span className="navbar-brand" onClick={navigateToHome} style={{ cursor: "pointer" }}>
             ProSalud
           </span>
@@ -54,12 +54,8 @@ const NavBar = () => {
           </button>
           <div className="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
             <ul className="navbar-nav mb-2 mb-lg-0">
-              {/* Enlace de Inicio que redirige según el rol del usuario */}
-              <li className="nav-item">
-                <span className="nav-link" onClick={navigateToHome} style={{ cursor: "pointer" }}>
-                  Inicio
-                </span>
-              </li>
+             
+             
 
               {isAuthenticated && (
                 <>

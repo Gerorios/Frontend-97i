@@ -1,81 +1,86 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import TablaPacientes from '../Components/PanelMedicos/TablaPacientes';
 
 const MedicoScreen = () => {
-  const [pacientesPendientes, setPacientesPendientes] = useState([]);
-  const [pacientesAceptados, setPacientesAceptados] = useState([]);
-  const [pacientesRechazados, setPacientesRechazados] = useState([]);
 
-  // Obtener citas del backend y clasificarlas según su estado
-  useEffect(() => {
-    const fetchPacientes = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/api/getAllAppointments');
-        const data = await response.json();
+  const [citas, setCitas] = useState([]);
 
-        // Clasificar pacientes por su estado
-        const pendientes = data.appointments.filter(paciente => paciente.estado === 'pendiente');
-        const aceptados = data.appointments.filter(paciente => paciente.estado === 'aceptado');
-        const rechazados = data.appointments.filter(paciente => paciente.estado === 'rechazado');
-
-        setPacientesPendientes(pendientes);
-        setPacientesAceptados(aceptados);
-        setPacientesRechazados(rechazados);
-
-      } catch (error) {
-        alert('Error fetching pacientes:', error);
-      }
-    };
-
-    fetchPacientes();
+  
+  const fetchPacientes = useCallback(async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch('http://localhost:3000/api/getAllAppointments', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error(res.statusText);
+      const data = await res.json();
+      setCitas(data.appointments);
+    } catch (error) {
+      console.error('Error fetching pacientes:', error);
+      alert('Error al cargar las citas');
+    }
   }, []);
 
-  // Función para aceptar el turno de un paciente
+  
+  useEffect(() => {
+    fetchPacientes();
+  }, [fetchPacientes]);
+
+
   const aceptarPaciente = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/appointments/${id}`, {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`http://localhost:3000/api/appointments/${id}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
         body: JSON.stringify({ estado: 'aceptado' })
       });
-
-      const updatedAppointment = await response.json();
-
-      // Actualizar el estado de la UI moviendo el paciente de "pendientes" a "aceptados"
-      setPacientesPendientes(pacientesPendientes.filter(paciente => paciente._id !== id));
-      setPacientesAceptados([...pacientesAceptados, updatedAppointment.appointment]);
-
+      if (!res.ok) throw new Error(res.statusText);
+      await fetchPacientes();
     } catch (error) {
-      alert('Error accepting appointment:', error);
+      console.error('Error accepting appointment:', error);
+      alert('Error al aceptar la cita');
     }
   };
 
-  // Función para rechazar el turno de un paciente
+  
   const rechazarPaciente = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/appointments/${id}`, {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`http://localhost:3000/api/appointments/${id}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
         body: JSON.stringify({ estado: 'rechazado' })
       });
-
-      const updatedAppointment = await response.json();
-
-      // Actualizar el estado de la UI moviendo el paciente de "pendientes" a "rechazados"
-      setPacientesPendientes(pacientesPendientes.filter(paciente => paciente._id !== id));
-      setPacientesRechazados([...pacientesRechazados, updatedAppointment.appointment]);
-
+      if (!res.ok) throw new Error(res.statusText);
+      await fetchPacientes();
     } catch (error) {
-      alert('Error rejecting appointment:', error);
+      console.error('Error rejecting appointment:', error);
+      alert('Error al rechazar la cita');
     }
   };
+
+  const pacientesPendientes  = citas.filter(c => c.estado === 'pendiente');
+  const pacientesAceptados   = citas.filter(c => c.estado === 'aceptado');
+  const pacientesRechazados  = citas.filter(c => c.estado === 'rechazado');
 
   return (
     <div className="container">
       <h1 className="text-center my-4">Gestión de Pacientes</h1>
-      <h2>Pacientes Pendientes</h2>
-      <TablaPacientes pacientes={pacientesPendientes} onAceptar={aceptarPaciente} onRechazar={rechazarPaciente} />
       
+      <h2>Pacientes Pendientes</h2>
+      <TablaPacientes 
+        pacientes={pacientesPendientes}
+        onAceptar={aceptarPaciente}
+        onRechazar={rechazarPaciente}
+      />
+
       <h2>Pacientes Aceptados</h2>
       <TablaPacientes pacientes={pacientesAceptados} />
 

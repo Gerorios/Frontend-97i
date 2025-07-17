@@ -24,7 +24,7 @@ function App() {
       setUser(JSON.parse(savedUser));
       console.log("Usuario cargado desde localStorage:", JSON.parse(savedUser));
     }
-    setIsLoading(false); // <-- Aquí actualizamos isLoading a false después de intentar cargar el usuario
+    setIsLoading(false); 
   }, []);
 
   useEffect(() => {

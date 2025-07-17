@@ -1,4 +1,3 @@
-// ProtectedRoutesAdmin.jsx
 import { Navigate } from 'react-router-dom';
 
 const ProtectedRoutesAdmin = ({ user, children }) => {
