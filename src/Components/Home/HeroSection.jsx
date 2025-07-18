@@ -28,7 +28,7 @@ const HeroSection = () => {
           <img className="d-block w-100" src={img2} alt="Second slide" />
           <div className="overlay"></div>
           <Carousel.Caption className="centered-caption">
-            <h2 className='texto-imagen'>Nuestros Servicios </h2>
+            <h2 className='texto-imagen'>Nuestros Servicios</h2>
             <p className='texto-imagen'>Especialidades médicas adaptadas a tus necesidades.</p>
             <a href="#section-info"><Button text = {"Ver servicios"} className="Btn-carousel"/></a>
           </Carousel.Caption>

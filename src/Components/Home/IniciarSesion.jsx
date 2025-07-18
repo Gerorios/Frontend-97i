@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authLogin } from '../../helpers/ApiLogin';
+import { AuthContext } from '../../Context/AuthContext';
 
-const IniciarSesion = ({ show, handleClose,guardarUsuario }) => {
+const IniciarSesion = ({ show, handleClose }) => {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const [formValues, setFormValues] = useState({
     email: '',
@@ -13,92 +15,75 @@ const IniciarSesion = ({ show, handleClose,guardarUsuario }) => {
 
   if (!show) return null;
 
-  const handleChange = (event) => {
-    setFormValues({
-      ...formValues,
-      [event.target.name]: event.target.value,
-    });
+  const handleChange = (e) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setErrorMessage('');
-
 
     try {
       const result = await authLogin(formValues);
-      if (!result || !result.token) {
+      if (!result?.token) {
         setErrorMessage(result?.msg || 'Credenciales incorrectas');
         return;
       }
 
-      guardarUsuario(result.user);  // Guarda la info del usuario en estado global o contexto
-      
-      localStorage.setItem('token', result.token);
-      localStorage.setItem('user', JSON.stringify(result.user));
+      // Almacena en contexto y localStorage
+      login({ userData: result.user, token: result.token });
 
-
-      // Redirige según el rol del usuario
-      if (result.user.role === 'admin') navigate('/admin');
-      else if (result.user.role === 'usuario') navigate('/user');
+      // Redirige según el rol
+      if (result.user.role === 'admin')      navigate('/admin');
       else if (result.user.role === 'medico') navigate('/medico');
-      else setErrorMessage('No tienes permiso para acceder a esta sección');
+      else if (result.user.role === 'usuario') navigate('/user');
+      else setErrorMessage('No tienes permiso para acceder');
 
-  
-      handleClose();  // Cerrar modal si el login es exitoso
-    } catch (error) {
+      handleClose();
+    } catch {
       setErrorMessage('Error al iniciar sesión');
     }
-    
   };
 
   return (
-    <div
-      className="modal fade show d-block"
-      id="staticBackdropLogin"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabIndex="-1"
-      aria-labelledby="staticBackdropLabel"
-    >
-      <div className="modal-dialog">
+    <div className="modal fade show d-block" tabIndex="-1" role="dialog">
+      <div className="modal-dialog" role="document">
         <div className="modal-content">
           <div className="modal-header">
-            <h1 className="modal-title fs-5" id="staticBackdropLabel">Iniciar Sesión</h1>
-            <button type="button" className="btn-close" onClick={handleClose} aria-label="Close"></button>
+            <h5 className="modal-title">Iniciar Sesión</h5>
+            <button type="button" className="btn-close" onClick={handleClose} />
           </div>
           <div className="modal-body">
-            <form id="formularioLogin" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
               <div className="mb-3">
-                <label htmlFor="login_email" className="form-label">Ingrese su mail</label>
+                <label className="form-label">Email</label>
                 <input
                   type="email"
-                  className="form-control"
                   name="email"
-                  placeholder="Ingrese su mail"
+                  className="form-control"
                   value={formValues.email}
                   onChange={handleChange}
                   required
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="login_password" className="form-label">Contraseña</label>
+                <label className="form-label">Contraseña</label>
                 <input
                   type="password"
-                  className="form-control"
                   name="password"
-                  placeholder="Ingrese contraseña"
+                  className="form-control"
                   value={formValues.password}
                   onChange={handleChange}
                   required
                 />
               </div>
-              <button type="submit" className="btn btn-primary">Iniciar Sesión</button>
+              {errorMessage && (
+                <div className="alert alert-danger">{errorMessage}</div>
+              )}
+              <button type="submit" className="btn btn-primary mt-2">
+                Iniciar Sesión
+              </button>
             </form>
-          </div>
-          {errorMessage && <div className="alert alert-danger mt-3">{errorMessage}</div>}
-          <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" onClick={handleClose}>Cerrar</button>
           </div>
         </div>
       </div>

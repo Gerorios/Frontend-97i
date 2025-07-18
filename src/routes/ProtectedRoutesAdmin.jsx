@@ -1,12 +1,15 @@
+import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
+import { AuthContext } from '../Context/AuthContext';
 
-const ProtectedRoutesAdmin = ({ user, children }) => {
+const ProtectedRoutesAdmin = ({ children }) => {
+  const { user } = useContext(AuthContext);
   console.log('Usuario en ProtectedRoutesAdmin:', user);
 
   if (!user || user.role !== 'admin') {
-    return <Navigate to="/" />;
+    return <Navigate to="/" replace />;
   }
-  return children;
+  return <>{children}</>;
 };
 
 export default ProtectedRoutesAdmin;

@@ -5,7 +5,7 @@ import Pasos from "../Components/Home/Pasos"
 import HeroSection from "../Components/Home/HeroSection";
 import SectionInfo from "../Components/Home/SectionInfo";
 import Section2 from "../Components/Home/Section2"
-import Footer from "../Components/Common/Footer";
+
 const HomeScreen = () => {
   return (
     <>
