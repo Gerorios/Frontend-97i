@@ -26,14 +26,14 @@ const IniciarSesion = ({ show, handleClose }) => {
     try {
       const result = await authLogin(formValues);
       if (!result?.token) {
-        setErrorMessage(result?.msg || 'Credenciales incorrectas');
+        setErrorMessage(result?.msg || 'Mail o contraseña incorrectos');
         return;
       }
 
-      // Almacena en contexto y localStorage
+      
       login({ userData: result.user, token: result.token });
 
-      // Redirige según el rol
+      
       if (result.user.role === 'admin')      navigate('/admin');
       else if (result.user.role === 'medico') navigate('/medico');
       else if (result.user.role === 'usuario') navigate('/user');

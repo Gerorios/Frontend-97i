@@ -1,62 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { AuthContext } from '../Context/AuthContext';
 
-const PerfilScreen = ({ user }) => {
+const PerfilScreen = () => {
+  const { user, updateUser } = useContext(AuthContext);
   const [formData, setFormData] = useState({
-    name: user?.name || "",
-    last_name: user?.last_name || "",
-    email: user?.email || "",
-    phone_number: user?.phone_number || "",
+    name: '',
+    last_name: '',
+    email: '',
+    phone_number: ''
   });
+  const [message, setMessage] = useState('');
 
-  // Función para actualizar usuario en el servidor
-  const actualizarUsuario = async (userId, updatedData) => {
+  // Inicializar formulario con datos del contexto
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        name:  '',
+        last_name:  '',
+        email:  '',
+        phone_number: ''
+      });
+    }
+  }, [user]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSave = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/update/${userId}`, {
-        method: "PUT",
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:3000/api/update/${user.idUser}`, {
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify(formData)
       });
 
       const data = await response.json();
-
-      if (response.ok) {
-        alert("Datos actualizados con éxito");
-        
-        
-
-        // Actualizar solo name y email en localStorage, manteniendo idUser y role
-        const storedUser = JSON.parse(localStorage.getItem("user"));
-        const updatedUser = {
-          ...storedUser,
-          name: data.update.name,       // Actualizar el nuevo nombre
-          email: data.update.email,     // Actualizar el nuevo email
-        };
-        localStorage.setItem("user", JSON.stringify(updatedUser));
-      } else {
-        alert("Error al actualizar el usuario: " + (data.message || "Respuesta inválida"));
-      }
-    } catch (error) {
-      alert("Error en la solicitud: " + error.message);
-    }
-  };
-
-  // Función para manejar los cambios en el formulario
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  // Función para guardar los cambios
-  const handleSave = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      const userId = user.idUser;
-      actualizarUsuario(userId, formData);
-    } else {
-      alert("No se pudo actualizar: ID del usuario no encontrado");
+      if (!response.ok) throw new Error(data.message || 'Error actualizando perfil');
+      updateUser({
+        name: data.update.name,
+        last_name: data.update.last_name,
+        email: data.update.email,
+        phone_number: data.update.phone_number
+      });
+      setMessage('Perfil actualizado con éxito');
+    } catch (err) {
+      setMessage(`Error: ${err.message}`);
     }
   };
 
@@ -112,10 +106,20 @@ const PerfilScreen = ({ user }) => {
           />
         </div>
 
-        <button type="button" className="btn btn-primary" onClick={handleSave}>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={handleSave}
+        >
           Guardar Cambios
         </button>
       </form>
+
+      {message && (
+        <div className="alert alert-info mt-3">
+          {message}
+        </div>
+      )}
     </div>
   );
 };

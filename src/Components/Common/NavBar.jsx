@@ -104,7 +104,6 @@ const NavBar = () => {
           </div>
         </div>
       </nav>
-
       <IniciarSesion
         show={showLoginModal}
         handleClose={() => setShowLoginModal(false)}
