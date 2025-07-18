@@ -9,7 +9,7 @@ const MedicoScreen = () => {
   const fetchPacientes = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:3000/api/medico/Appointment', {
+      const res = await fetch('https://backend-turnero97i.onrender.com/api/medico/Appointment', {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (!res.ok) throw new Error(res.statusText);
@@ -30,7 +30,7 @@ const MedicoScreen = () => {
   const aceptarPaciente = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3000/api/appointments/${id}`, {
+      const res = await fetch(`https://backend-turnero97i.onrender.com/api/appointments/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ const MedicoScreen = () => {
   const rechazarPaciente = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3000/api/appointments/${id}`, {
+      const res = await fetch(`https://backend-turnero97i.onrender.com/api/appointments/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

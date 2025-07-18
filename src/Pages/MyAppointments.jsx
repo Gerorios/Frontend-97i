@@ -9,7 +9,7 @@ const MyAppointments = () => {
   useEffect(() => {
     const fetchTurnos = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/myAppointments", {
+        const res = await fetch("https://backend-turnero97i.onrender.com/api/myAppointments", {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (!res.ok) throw new Error(res.statusText);

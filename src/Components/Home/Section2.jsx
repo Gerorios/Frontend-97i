@@ -22,7 +22,7 @@ const Section2 = () => {
       try {
         const token = localStorage.getItem('token'); 
 
-        const response = await fetch('http://localhost:3000/api/medicos', {
+        const response = await fetch('https://backend-turnero97i.onrender.com/api/medicos', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -50,7 +50,7 @@ const Section2 = () => {
     const fetchEstudios = async () => {
       try {
         const token = localStorage.getItem('token'); 
-        const response = await fetch('http://localhost:3000/api/tipo-estudios', {
+        const response = await fetch('https://backend-turnero97i.onrender.com/api/tipo-estudios', {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}` 
@@ -115,7 +115,7 @@ const Section2 = () => {
     };
   
     try {
-      const response = await fetch("http://localhost:3000/api/createAppointments", {
+      const response = await fetch("https://backend-turnero97i.onrender.com/api/createAppointments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

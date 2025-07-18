@@ -31,7 +31,7 @@ const PerfilScreen = () => {
   const handleSave = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:3000/api/update/${user.idUser}`, {
+      const response = await fetch(`https://backend-turnero97i.onrender.com/api/update/${user.idUser}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

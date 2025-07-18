@@ -60,7 +60,7 @@ Sigue los siguientes pasos para instalar y ejecutar el proyecto en tu entorno lo
    npm start
    ```
 
-   El proyecto se ejecutará en `http://localhost:3000`.
+   El proyecto se ejecutará en `https://backend-turnero97i.onrender.com`.
 
 ## 🖼️ Vistas del Proyecto
 
