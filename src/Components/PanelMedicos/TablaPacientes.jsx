@@ -12,6 +12,7 @@ const TablaPacientes = ({ pacientes, onAceptar, onRechazar }) => {
             <th>Email</th>
             <th>Teléfono</th>
             <th>Consulta</th>
+            <th>Mensaje</th>
             <th>Turno</th>
             {onAceptar && onRechazar && <th>Acciones</th>}
           </tr>

@@ -8,6 +8,7 @@ const Paciente = ({ paciente, onAceptar, onRechazar }) => {
             <td>{paciente.user?.email || 'N/A'}</td>
             <td>{paciente.user?.phone_number || 'N/A'}</td>
             <td>{paciente.tipoEstudio?.name || 'N/A'}</td>
+            <td>{paciente.message || 'N/A'}</td>
             <td>{new Date(paciente.fecha).toLocaleString()}</td>
             {onAceptar && onRechazar && (
                 <td>

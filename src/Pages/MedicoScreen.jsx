@@ -9,7 +9,7 @@ const MedicoScreen = () => {
   const fetchPacientes = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:3000/api/getAllAppointments', {
+      const res = await fetch('http://localhost:3000/api/medico/Appointment', {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (!res.ok) throw new Error(res.statusText);

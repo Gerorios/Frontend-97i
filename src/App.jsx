@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavBar from './Components/Common/NavBar';
 import HomeScreen from './Pages/HomeScreen';
 import IniciarSesion from './Components/Home/IniciarSesion';
-import UserScreen from './Pages/UserScreen';
 import PageAdmin from './Pages/PageAdmin';
 import MedicoScreen from './Pages/MedicoScreen';
 import ProtectedRoutesUser from './routes/ProtectedRoutesUser';
@@ -13,6 +12,8 @@ import Footer from './Components/Common/Footer';
 import AboutScreen from './Pages/AboutScreen';
 import ErrorScreen from './Pages/ErrorScreen';
 import PerfilScreen from './Pages/PerfilScreen';
+import MyAppointments from './Pages/MyAppointments';
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -59,14 +60,6 @@ function App() {
           }
         />
         <Route
-          path="/user"
-          element={
-            <ProtectedRoutesUser user={user}>
-              <UserScreen />
-            </ProtectedRoutesUser>
-          }
-        />
-        <Route
           path="/medico"
           element={
             <ProtectedRoutesMedico user={user}>
@@ -74,6 +67,14 @@ function App() {
             </ProtectedRoutesMedico>
           }
         />
+        <Route
+          path="/user"
+          element={
+            <ProtectedRoutesUser user={user}>
+              <MyAppointments />
+            </ProtectedRoutesUser>
+          }
+          />
         <Route path="/about" element={<AboutScreen />} />
         <Route path="/perfil" element={<PerfilScreen />} />
         <Route path='/error' element={<ErrorScreen/>}/>

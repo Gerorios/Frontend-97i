@@ -9,7 +9,7 @@ const PageAdmin = () => {
   const [totalUsers, setTotalUsers] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Obtener todos los usuarios desde el backend con fetch
+  
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -21,7 +21,7 @@ const PageAdmin = () => {
     
         const data = await res.json();
         
-        setUsers([...data.getUsers]); // Forzar actualización con una copia del array
+        setUsers([...data.getUsers]); 
         setTotalUsers(data.count);
         console.log("Updated users state:", data.getUsers);
       } catch (error) {
@@ -32,7 +32,7 @@ const PageAdmin = () => {
     fetchUsers();
   }, [currentPage, usersPerPage]);
   
-  // Manejar cambio de rol del usuario
+
   const handleRoleChange = async (id, newRole) => {
     try {
       const res = await fetch(`http://localhost:3000/api/userRoleChange/${id}`, {
@@ -49,7 +49,7 @@ const PageAdmin = () => {
   
       const data = await res.json();
   
-      // Actualizar el rol en la lista de usuarios
+     
       const updatedUsers = users.map(user =>
         user._id === id ? { ...user, role: newRole } : user
       );
@@ -60,12 +60,12 @@ const PageAdmin = () => {
   };
 
 
-  // Obtener usuarios actuales para la página
+
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
-  // Paginación
+ 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };

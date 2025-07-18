@@ -29,14 +29,11 @@ const IniciarSesion = ({ show, handleClose }) => {
         setErrorMessage(result?.msg || 'Mail o contraseña incorrectos');
         return;
       }
-
-      
       login({ userData: result.user, token: result.token });
 
-      
       if (result.user.role === 'admin')      navigate('/admin');
       else if (result.user.role === 'medico') navigate('/medico');
-      else if (result.user.role === 'usuario') navigate('/user');
+      else if (result.user.role === 'usuario') navigate('/');
       else setErrorMessage('No tienes permiso para acceder');
 
       handleClose();

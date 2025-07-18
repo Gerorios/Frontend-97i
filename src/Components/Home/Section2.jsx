@@ -14,18 +14,17 @@ const Section2 = () => {
     tipoEstudio: '',
     medicoId: '',
     message: '',
-    fecha: new Date() // Nuevo campo para la fecha
+    fecha: new Date() 
   });
 
-  // Obtener médicos del backend
   useEffect(() => {
     const fetchMedicos = async () => {
       try {
-        const token = localStorage.getItem('token'); // Obtener token del almacenamiento local
+        const token = localStorage.getItem('token'); 
 
         const response = await fetch('http://localhost:3000/api/medicos', {
           headers: {
-            Authorization: `Bearer ${token}` // Incluir el token en los headers
+            Authorization: `Bearer ${token}`
           }
         });
 
@@ -77,8 +76,6 @@ const Section2 = () => {
     fetchEstudios();
   }, []);
 
-
-  // Manejar cambios en el formulario
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -86,7 +83,7 @@ const Section2 = () => {
     });
   };
 
-  // Manejar cambios en la fecha
+
   const handleDateChange = (date) => {
     setFormData({
       ...formData,
@@ -94,15 +91,14 @@ const Section2 = () => {
     });
   };
   
-  // Manejar el envío del formulario
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     console.log(formData);
-    
-    // Obtén el token y los datos del usuario del localStorage
+
     const token = localStorage.getItem("token");
-    const user = JSON.parse(localStorage.getItem("user")); // Obtiene los datos del usuario
+    const user = JSON.parse(localStorage.getItem("user")); 
   
     if (!token) {
       alert("Debes estar logueado para solicitar un turno");
@@ -110,7 +106,7 @@ const Section2 = () => {
     }
   
     const formDataWithUser = {
-      user: user.idUser,  // Usa el ID del usuario almacenado
+      user: user.idUser,  
       tipoEstudio: formData.tipoEstudio,
       phone_number: formData.telefono,
       medico: formData.medicoId,
@@ -123,7 +119,7 @@ const Section2 = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` // Enviar el token en los headers si es necesario
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(formDataWithUser)
       });
